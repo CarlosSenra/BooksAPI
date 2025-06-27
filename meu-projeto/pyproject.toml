@@ -19,6 +19,12 @@ dependencies = [
 packages = [{include = "meu_projeto", from = "src"}]
 
 
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.3.0"
+mypy = "^1.16.1"
+pre-commit = "^4.2.0"
+pytest = "^8.4.1"
+
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
