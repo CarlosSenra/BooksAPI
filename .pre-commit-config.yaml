@@ -13,7 +13,7 @@ repos:
         entry: poetry run mypy
         language: system
         types: [python]
-        exclude: ^notebooks/
+        exclude: (^|/)(poetry\.lock|pyproject\.toml)
 
       - id: pytest-local
         name: Run Pytest Local
