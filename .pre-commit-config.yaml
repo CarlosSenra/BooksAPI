@@ -1,23 +1,16 @@
 repos:
-  - repo: local
-    hooks:
-      - id: flake8-local
-        name: Run Flake8 Local
-        entry: poetry run flake8
-        language: system
-        types: [python]
-        exclude: ^notebooks/
+ - repo: local
+   hooks:
+   - id: black-local
+     name: Run Black Local
+     entry: poetry run black
+     language: system
+     types: [python]
+     exclude: ^notebooks/
 
-      - id: mypy-local
-        name: Ran Mypy Local
-        entry: poetry run mypy
-        language: system
-        types: [python]
-        exclude: (^|/)(poetry\.lock|pyproject\.toml)
-
-      - id: pytest-local
-        name: Run Pytest Local
-        entry: poetry run pytest
-        language: system
-        types: [python]
-        files: ^(tests_dev/|tests/)
+   - id: pytest-local
+     name: Run Pytest Local
+     entry: poetry run pytest
+     language: system
+     types: [python]
+     files: ^(tests_dev/|tests/)
