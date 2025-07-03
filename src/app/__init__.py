@@ -1,9 +1,10 @@
 from nest.core import Module, PyNestFactory
 from .modules.usuario import UsuarioModule
 from .modules.books import BooksModule
+from .modules.categories import CategoriesModule
 
 
-@Module(imports=[UsuarioModule, BooksModule])
+@Module(imports=[UsuarioModule, BooksModule, CategoriesModule])
 class AppModule:
     pass
 
