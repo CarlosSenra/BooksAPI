@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup, Tag
 import pandas as pd
 import time
 import logging
-from typing import List, Dict, Union
+from typing import List, Dict, Tuple, Optional
 from urllib.parse import urljoin
 
 # Configuração de logging
@@ -21,7 +21,7 @@ class BookScraper:
         self.session = requests.Session()
         self.books_data = []
 
-    def get_page(self, url: str) -> Union[BeautifulSoup, None]:
+    def get_page(self, url: str) -> Optional[BeautifulSoup]:
         """Faz requisição e retorna BeautifulSoup object"""
         try:
             response = self.session.get(url)
@@ -39,17 +39,17 @@ class BookScraper:
 
         categories = {}
         sidebar = soup.find("div", class_="side_categories")
-        logger.debug(f"A side bar é {sidebar}")
         if sidebar and isinstance(sidebar, Tag):
             links = sidebar.find_all("a", href=True)
-            logger.debug(f"Tem {len(links)}, exemplo : {links[5]}")
             for link in links:
                 if isinstance(link, Tag):
                     href = link.get("href")
                     if href and isinstance(href, str) and "catalogue/category" in href:
                         category_name = link.text.strip()
-                        category_url = urljoin(self.base_url, href)
-                    categories[category_name] = category_url
+                        if category_name and category_name != "Books":
+                            category_url = urljoin(self.base_url, href)
+                            categories[category_name] = category_url
+                            logger.debug(f"Categoria encontrada: {category_name}")
 
         logger.info(f"Encontradas {len(categories)} categorias")
         return categories
@@ -82,7 +82,6 @@ class BookScraper:
         else:
             book_data["rating"] = 0
 
-        # Imagem do livro
         image_element = book_element.find("div", class_="image_container").find("img")
         if image_element:
             image_src = image_element.get("src", "")
@@ -90,7 +89,6 @@ class BookScraper:
         else:
             book_data["image_url"] = ""
 
-        # Link do livro
         if title_element:
             book_data["link"] = urljoin(self.base_url, title_element.get("href", ""))
 
@@ -124,7 +122,6 @@ class BookScraper:
             books = self.get_books_from_page(current_url)
             all_books.extend(books)
 
-            # Verifica se há próxima página
             soup = self.get_page(current_url)
             if soup:
                 next_link = soup.find("li", class_="next")
@@ -168,19 +165,19 @@ def main():
         print(f"{i}. {name}")
 
     if categories:
-        first_category = list(categories.items())[0]
-        logger.debug(first_category)
-        sample_books = scraper.scrape_category(first_category[0], first_category[1])
 
-        df_sample = pd.DataFrame(sample_books)
-        print(f"\nAmostra da categoria '{first_category[0]}':")
-        print(df_sample.head())
+        all_books = []
+        for category_name, category_url in list(categories.items()):
+            logger.info(f"Processando categoria: {category_name}")
+            books = scraper.scrape_category(category_name, category_url)
+            all_books.extend(books)
 
-        df_sample.to_csv(
-            f"src/data/raw/books/{first_category[0]}_books.csv",
-            index=False,
-            encoding="utf-8",
-        )
+        df_all = pd.DataFrame(all_books)
+        print(f"\nTotal de livros coletados: {len(df_all)}")
+        print(f"Categorias encontradas: {df_all['category'].unique()}")
+        print(df_all.head())
+
+        df_all.to_csv("src/data/raw/books/books.csv", index=False, encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -55,5 +55,5 @@ class CsvToDb:
 
 
 if __name__ == "__main__":
-    csv_to_db = CsvToDb("src/data/raw/books/Books_books.csv", session=session)
+    csv_to_db = CsvToDb("src/data/raw/books/books.csv", session=session)
     csv_to_db.convert_to_db()
