@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Float, Text, DateTime
 from app.shared.database.base import Base
 
 
-class Book(Base):
+class Books(Base):
     __tablename__ = "books"
 
     id = Column(Integer, primary_key=True, index=True)
