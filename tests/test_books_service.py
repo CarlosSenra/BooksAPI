@@ -5,8 +5,8 @@ from unittest.mock import Mock, patch, MagicMock
 with patch.dict(
     "sys.modules",
     {
-        "src.app.shared.database.models.books": MagicMock(),
-        "src.app.shared.database.models.usuario": MagicMock(),
+        "src.models.books": MagicMock(),
+        "src.models.usuario": MagicMock(),
     },
 ):
     from src.app.modules.books.books_service import BooksService

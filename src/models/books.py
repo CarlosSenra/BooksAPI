@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float, Text, DateTime
-from app.shared.database.base import Base
+from shared.database.base import Base
 
 
 class Books(Base):

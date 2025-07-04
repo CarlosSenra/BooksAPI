@@ -1,7 +1,7 @@
 from nest.core import Injectable
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
-from app.shared.database.models.usuario import Usuario
+from models.usuario import Usuario
 from .dto.usuario_dto import UsuarioCreate, UsuarioCreateResponse
 from datetime import datetime
 

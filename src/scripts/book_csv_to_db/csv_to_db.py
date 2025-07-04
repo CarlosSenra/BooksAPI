@@ -1,9 +1,9 @@
 import pandas as pd
-from app.shared.database.models.books import Books
+from models.books import Books
 from sqlalchemy.orm import Session
 
-from app.shared.database.connection import get_db, engine
-from app.shared.database.base import Base
+from shared.database.connection import get_db, engine
+from shared.database.base import Base
 
 Base.metadata.create_all(engine)
 session = next(get_db())

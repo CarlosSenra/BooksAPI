@@ -2,7 +2,7 @@ from nest.core import Controller, Post, Depends
 from .usuario_service import UsuarioService
 from .dto.usuario_dto import UsuarioCreate, UsuarioCreateResponse
 from sqlalchemy.orm import Session
-from app.shared.database.connection import get_db
+from shared.database.connection import get_db
 
 
 @Controller("/api/v1/usuario")

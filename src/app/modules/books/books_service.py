@@ -2,8 +2,8 @@ from nest.core import Injectable
 from typing import List, Optional, Tuple
 from sqlalchemy import or_
 from sqlalchemy.engine import Row
-from app.shared.database.connection import get_db, engine
-from app.shared.database.models.books import Books
+from shared.database.connection import get_db, engine
+from models.books import Books
 from .dto.books_dto import BookListResponse, BookResponse
 
 

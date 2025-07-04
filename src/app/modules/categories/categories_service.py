@@ -1,6 +1,6 @@
 from nest.core import Injectable
-from app.shared.database.connection import get_db
-from app.shared.database.models.books import Books
+from shared.database.connection import get_db
+from models.books import Books
 from .dto.dto_categories import CategoryListResponse
 from typing import List
 
