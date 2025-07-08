@@ -3,9 +3,10 @@ from .usuario_service import UsuarioService
 from .dto.usuario_dto import UsuarioCreate, UsuarioCreateResponse
 from sqlalchemy.orm import Session
 from shared.database.connection import get_db
+from app.shared.config.config import API_PREFIX
 
 
-@Controller("/api/v1/usuario")
+@Controller(f"{API_PREFIX}/usuario")
 class UsuarioController:
     def __init__(self, service: UsuarioService):
         self.service = service
